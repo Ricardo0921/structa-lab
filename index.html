@@ -525,11 +525,123 @@
     .hero-inner {
       position: relative;
       z-index: 1;
-      padding: 80px 0 80px;
+      padding: 80px 0 40px;
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 60px;
+      align-items: start;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+    }
+
+    /* Hero video */
+    .hero-video-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hero-video-placeholder {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, rgba(39,60,117,0.35) 0%, rgba(237,76,14,0.08) 100%);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
       align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s;
+    }
+
+    .hero-video-placeholder:hover {
+      border-color: rgba(237,76,14,0.55);
+    }
+
+    .hero-video-placeholder iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+    }
+
+    .hero-video-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.03) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.03) 40px);
+    }
+
+    .hero-video-corner {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-color: rgba(237,76,14,0.4);
+      border-style: solid;
+    }
+    .hero-video-corner.tl { top: 14px; left: 14px; border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+    .hero-video-corner.br { bottom: 14px; right: 14px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 4px; }
+
+    .hero-play-btn {
+      position: relative;
+      z-index: 2;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 12px rgba(237,76,14,0.15), 0 8px 32px rgba(237,76,14,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hero-video-placeholder:hover .hero-play-btn {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 16px rgba(237,76,14,0.18), 0 12px 40px rgba(237,76,14,0.45);
+    }
+
+    .hero-video-label {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .hero-video-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: rgba(39,60,117,0.75);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 2;
     }
 
     .hero-badge {
@@ -561,14 +673,27 @@
     }
 
     .hero-stats {
-      display: flex;
-      gap: 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      padding: 36px 0 72px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 1;
       flex-wrap: wrap;
     }
 
     .hero-stat {
-      border-left: 3px solid var(--orange);
-      padding-left: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 24px;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero-stat:last-child {
+      border-right: none;
     }
 
     .hero-stat-n {
@@ -1533,6 +1658,16 @@
         display: none;
       }
 
+      .hero-video-wrap {
+        max-width: 560px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
       .solution-grid {
         grid-template-columns: 1fr;
         gap: 52px;
@@ -1614,7 +1749,19 @@
       }
 
       .hero-stats {
-        gap: 20px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .hero-stat {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        padding: 16px 0;
+      }
+
+      .hero-stat:last-child {
+        border-bottom: none;
       }
 
       .pain-grid {
@@ -1705,20 +1852,38 @@
     </div>
 
     <div class="container">
+
+      <!-- Two-column grid: title+subtitle | video+CTAs -->
       <div class="hero-inner">
-        <!-- Left: Copy -->
-        <div>
-          <div class="hero-badge">
-            <span class="badge badge-white">◆ Business Structure Lab</span>
-          </div>
+
+        <!-- Left: Title + Subtitle -->
+        <div class="hero-copy">
           <h1 class="hero-h1">
             <span class="t-es">Tu negocio crece,<br>pero sigue dependiendo<br><span class="accent">100% de ti.</span></span>
             <span class="t-en">Your business grows,<br>but still depends<br><span class="accent">100% on you.</span></span>
           </h1>
           <p class="hero-sub">
-            <span class="t-es">Sin sistemas, sin estructura y sin tecnología que trabaje para ti, el crecimiento solo trae más caos. Estructuramos tu operación e implementamos soluciones a la medida para que tu negocio funcione con claridad, control y dirección real.</span>
-            <span class="t-en">Without systems, structure, and technology working for you, growth only brings more chaos. We structure your operation and implement custom solutions so your business runs with real clarity, control, and direction.</span>
+            <span class="t-es">Sin sistemas, sin estructura y sin tecnología que trabaje para ti, <strong>el crecimiento solo trae más caos.</strong> Estructuramos tu operación e implementamos soluciones a la medida para que tu negocio funcione con claridad, control y dirección real.</span>
+            <span class="t-en">Without systems, structure, and technology working for you, <strong>growth only brings more chaos.</strong> We structure your operation and implement custom solutions so your business runs with real clarity, control, and direction.</span>
           </p>
+        </div>
+
+        <!-- Right: Video + CTAs below -->
+        <div class="hero-video-wrap">
+          <div class="hero-video-placeholder" id="heroVideoPlaceholder" onclick="loadHeroVideo()" role="button" aria-label="Reproducir video de Structa Lab">
+            <div class="hero-video-bg-pattern"></div>
+            <div class="hero-video-corner tl"></div>
+            <div class="hero-video-corner br"></div>
+            <div class="hero-video-badge">STRUCTA LAB</div>
+            <button class="hero-play-btn" tabindex="-1" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="white" stroke="none"><path d="M8 5.14v14l11-7-11-7z"/></svg>
+            </button>
+            <div class="hero-video-label">
+              <span class="t-es">▶ &nbsp;Ver cómo trabajamos</span>
+              <span class="t-en">▶ &nbsp;See how we work</span>
+            </div>
+          </div>
+          <!-- CTAs below video -->
           <div class="hero-ctas">
             <a href="https://structa-test.base44.app/" target="_blank" class="btn btn-primary btn-lg">
               <svg class="hi" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z"/></svg>
@@ -1729,23 +1894,26 @@
               <span class="t-es">Agenda tu Llamada de Claridad</span><span class="t-en">Schedule Your Clarity Call</span>
             </a>
           </div>
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <div class="hero-stat-n">+5</div>
-              <div class="hero-stat-l"><span class="t-es">Años estructurando negocios</span><span class="t-en">Years structuring businesses</span></div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-n" style="display:flex;align-items:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg></div>
-              <div class="hero-stat-l"><span class="t-es">LATAM + Estados Unidos</span><span class="t-en">LATAM + United States</span></div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-n">1:1</div>
-              <div class="hero-stat-l"><span class="t-es">Acompañamiento personalizado</span><span class="t-en">Personalized coaching</span></div>
-            </div>
-          </div>
         </div>
 
       </div>
+
+      <!-- Stats row: 3 equal columns spanning full width -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-n">+5</div>
+          <div class="hero-stat-l"><span class="t-es">Años estructurando negocios</span><span class="t-en">Years structuring businesses</span></div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg></div>
+          <div class="hero-stat-l"><span class="t-es">LATAM + Estados Unidos</span><span class="t-en">LATAM + United States</span></div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-n">1:1</div>
+          <div class="hero-stat-l"><span class="t-es">Acompañamiento personalizado</span><span class="t-en">Personalized coaching</span></div>
+        </div>
+      </div>
+
     </div>
 
     <div class="scroll-hint">
@@ -2473,6 +2641,15 @@
      JAVASCRIPT
 ==================================================== -->
   <script>
+    /* ---------- HERO VIDEO LOADER ---------- */
+    function loadHeroVideo() {
+      var placeholder = document.getElementById('heroVideoPlaceholder');
+      if (!placeholder) return;
+      placeholder.innerHTML = '<iframe src="https://www.youtube.com/embed/5DAtYNxc0xw?autoplay=1&rel=0&modestbranding=1" title="Structa Lab" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>';
+      placeholder.style.cursor = 'default';
+      placeholder.onclick = null;
+    }
+
     /* ---------- LANGUAGE TOGGLE ---------- */
     function setLang(lang) {
       document.documentElement.lang = lang;
